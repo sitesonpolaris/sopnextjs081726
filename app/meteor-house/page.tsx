@@ -2,9 +2,12 @@
 
 import React, { useState } from 'react';
 import { Instagram, Send, CheckCircle, Palette, Film, FileImage } from 'lucide-react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { supabase } from '@/lib/supabase';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import PortfolioSliderMH from '@/components/portfolio/PortfolioSliderMH';
+import { ReCaptchaProvider } from '@/components/ReCaptchaProvider';
+import { RECAPTCHA_THRESHOLD, getSpamRejectionMessage } from '@/lib/spam-protection';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -59,6 +62,7 @@ export default function MeteorHousePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -73,6 +77,43 @@ export default function MeteorHousePage() {
     setSubmitError('');
 
     try {
+      if (!executeRecaptcha) {
+        setSubmitError('reCAPTCHA is not ready. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const token = await executeRecaptcha('meteor_house_form');
+
+      const verifyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/verify-recaptcha`;
+      const verifyResponse = await fetch(verifyUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token,
+          expectedAction: 'meteor_house_form',
+        }),
+      });
+
+      if (!verifyResponse.ok) {
+        console.error('reCAPTCHA verification failed');
+        setSubmitError(getSpamRejectionMessage('recaptcha'));
+        setIsSubmitting(false);
+        return;
+      }
+
+      const verifyData = await verifyResponse.json();
+
+      if (!verifyData.success || verifyData.score < RECAPTCHA_THRESHOLD) {
+        console.log('Spam detected. Score:', verifyData.score);
+        setSubmitError(getSpamRejectionMessage('recaptcha'));
+        setIsSubmitting(false);
+        return;
+      }
+
       const submissionData = {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -130,6 +171,7 @@ export default function MeteorHousePage() {
   };
 
   return (
+    <ReCaptchaProvider>
     <div className="relative z-10 bg-white min-h-screen mt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-12 md:pb-20">
         <Breadcrumb className="mb-8">
@@ -366,5 +408,6 @@ export default function MeteorHousePage() {
         </div>
       </div>
     </div>
+    </ReCaptchaProvider>
   );
 }
