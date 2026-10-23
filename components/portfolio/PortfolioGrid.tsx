@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Star, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
@@ -79,9 +80,11 @@ export function PortfolioGrid() {
               className="group overflow-hidden rounded-2xl border border-zero/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="relative h-56 overflow-hidden">
-                <img
+                <Image
                   src={project.thumbnail_url}
-                  alt={project.title}
+                  alt={`${project.title} website`}
+                  fill
+                  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zero/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getPublishedPost, getPublishedSlugs } from '@/lib/blog';
+import { getPublishedPost, getPublishedSlugs, getRelatedPosts } from '@/lib/blog';
+import { PostCard } from '@/components/blog/PostCard';
 import { DEFAULT_OG_IMAGE, LOGO_URL, SITE_NAME, absoluteUrl, jsonLd } from '@/lib/seo';
 
 export const revalidate = 3600;
@@ -52,6 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const post = await getPublishedPost(params.slug);
   if (!post) notFound();
+  const relatedPosts = await getRelatedPosts(post);
 
   const url = absoluteUrl(`/blog/${post.slug}`);
   const structuredData = [
@@ -125,10 +128,14 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="mx-auto max-w-3xl px-6">
           {post.image_url && (
             <div className="mb-12 overflow-hidden rounded-2xl border border-zero/10 shadow-lg">
-              <img
+              <Image
                 src={post.image_url}
                 alt={post.title}
-                className="w-full object-cover"
+                width={1200}
+                height={630}
+                sizes="(min-width: 768px) 720px, 100vw"
+                priority
+                className="w-full h-auto object-cover"
                 style={{ maxHeight: '500px' }}
               />
             </div>
@@ -155,6 +162,21 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {relatedPosts.length > 0 && (
+        <section className="bg-white py-16">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 className="mb-8 text-2xl font-bold tracking-tight text-zero sm:text-3xl">
+              Keep Reading
+            </h2>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {relatedPosts.map((related) => (
+                <PostCard key={related.id} post={related} headingLevel="h3" />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

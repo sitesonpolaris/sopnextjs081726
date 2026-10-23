@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Star, Quote, ArrowUpRight } from 'lucide-react';
 
 interface Testimonial {
@@ -152,9 +153,13 @@ export function TestimonialsSection() {
                     ))}
                   </div>
                   <div className="mt-3 flex items-center gap-3">
-                    <img
+                    <Image
                       src={current.avatar}
                       alt={current.name}
+                      width={48}
+                      height={48}
+                      // Google and Wix avatars are already tiny; only resize our own uploads.
+                      unoptimized={!current.avatar.includes('.supabase.co/')}
                       className="h-12 w-12 rounded-full object-cover"
                     />
                     <div>

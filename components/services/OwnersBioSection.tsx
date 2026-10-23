@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Instagram, Facebook } from 'lucide-react';
 
 export function OwnersBioSection() {
@@ -8,9 +9,11 @@ export function OwnersBioSection() {
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-shrink-0">
               <div className="relative">
-                <img
+                <Image
                   src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Jesse%202026.jpg"
                   alt="Jesse Shepeard, Owner/Operator"
+                  width={160}
+                  height={160}
                   className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-accent-red/50 shadow-2xl"
                 />
               </div>

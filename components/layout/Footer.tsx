@@ -1,11 +1,13 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Star, ArrowUpRight, Mail, Phone, MapPin } from 'lucide-react';
 
 const footerLinks = {
   services: [
-    { href: '/services#design', label: 'High-Conversion Design' },
-    { href: '/services#development', label: 'Enterprise Development' },
-    { href: '/services#automation', label: 'Systems + Automation' },
+    { href: '/web-design-development', label: 'Web Design & Development' },
+    { href: '/website-optimization', label: 'Website Optimization' },
+    { href: '/web-design-gastonia-nc', label: 'Web Design in Gastonia' },
+    { href: '/web-design-charlotte-nc', label: 'Web Design in Charlotte' },
   ],
   company: [
     { href: '/portfolio', label: 'Portfolio' },
@@ -26,8 +28,10 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-6">
             <Link href="/">
-              <img
+              <Image
                 src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Branding/SOP_Logo_Full_RGB_SOP_Logo_Full_RGB_Red_Rev%20(1).png"
+                width={199}
+                height={32}
                 alt="Sites on Polaris"
                 className="h-8 w-auto"
               />

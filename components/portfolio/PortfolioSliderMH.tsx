@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -108,9 +109,11 @@ export default function PortfolioSliderMH() {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 ) : (
-                  <img
+                  <Image
                     src={currentItem.image_url}
                     alt={currentItem.title}
+                    fill
+                    sizes="(min-width: 1024px) 1024px, 100vw"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 )}

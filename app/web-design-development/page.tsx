@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ArrowRight,
   Paintbrush,
@@ -115,9 +116,11 @@ export default function WebDesignDevelopmentPage() {
                   className="group overflow-hidden rounded-2xl border border-zero/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="relative h-64 overflow-hidden">
-                    <img
+                    <Image
                       src={project.image_url}
-                      alt={project.title}
+                      alt={`${project.title} website`}
+                      fill
+                      sizes="(min-width: 1280px) 600px, (min-width: 640px) 50vw, 100vw"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zero/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
@@ -249,9 +252,12 @@ export default function WebDesignDevelopmentPage() {
             </div>
             <div className="lg:col-span-1">
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <img
+                <Image
                   src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/AI%20pic.JPG"
                   alt="AI technology and neural networks"
+                  width={800}
+                  height={800}
+                  sizes="(min-width: 1024px) 400px, 100vw"
                   className="w-full h-full object-cover aspect-square"
                 />
               </div>
@@ -436,9 +442,11 @@ export default function WebDesignDevelopmentPage() {
           <div className="rounded-2xl border-2 border-zero/10 bg-white p-8 md:p-12 max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
-                <img
+                <Image
                   src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Jesse%202026.jpg"
                   alt="Jesse Shepeard, Owner/Operator"
+                  width={192}
+                  height={192}
                   className="w-32 h-32 md:w-48 md:h-48 rounded-full object-cover border-4 border-fahrenheit/50 shadow-2xl"
                 />
               </div>

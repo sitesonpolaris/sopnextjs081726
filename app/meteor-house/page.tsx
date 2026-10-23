@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Instagram, Send, CheckCircle, Palette, Film, FileImage } from 'lucide-react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { supabase } from '@/lib/supabase';
+import Image from 'next/image';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import PortfolioSliderMH from '@/components/portfolio/PortfolioSliderMH';
 import { ReCaptchaProvider } from '@/components/ReCaptchaProvider';
@@ -189,8 +190,10 @@ export default function MeteorHousePage() {
         <div className="text-center mb-12 md:mb-20">
           <div className="flex items-center justify-center mb-4 md:mb-6">
             <div className="w-full h-full rounded-full flex items-center justify-center">
-              <img
+              <Image
                 src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Branding/MH%20Logo%20for%20SoP.png"
+                width={130}
+                height={128}
                 alt="Meteor House Logo"
                 className="h-20 md:h-32 w-auto"
               />

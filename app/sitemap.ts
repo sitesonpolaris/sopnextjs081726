@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getPublishedSlugs } from '@/lib/blog';
 import { supabase } from '@/lib/supabase';
 import { absoluteUrl } from '@/lib/seo';
+import { SERVICE_AREAS } from '@/lib/service-areas';
 
 export const revalidate = 3600;
 
@@ -9,6 +10,7 @@ const STATIC_ROUTES = [
   '/',
   '/web-design-development',
   '/website-optimization',
+  ...SERVICE_AREAS.map((area) => `/${area.slug}`),
   '/portfolio',
   '/blog',
   '/meteor-house',

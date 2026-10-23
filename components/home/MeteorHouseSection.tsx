@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -18,8 +19,10 @@ export function MeteorHouseSection() {
           <div className="text-center mb-6 sm:mb-8">
             <p className="text-xs sm:text-sm font-semibold text-accent-red tracking-wider uppercase mb-3 sm:mb-4">Marketing Partner</p>
             <div className="flex justify-center mb-4 sm:mb-5 md:mb-6">
-              <img
+              <Image
                 src={logoUrl}
+                width={130}
+                height={128}
                 alt="Meteor House - Marketing Partner"
                 className="h-16 sm:h-20 md:h-24 w-auto transition-transform duration-300 hover:scale-105"
               />
