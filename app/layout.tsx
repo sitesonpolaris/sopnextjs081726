@@ -4,6 +4,7 @@ import { Space_Grotesk } from 'next/font/google';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Script from 'next/script';
+import { LOGO_URL, SITE_NAME, SITE_URL, SOCIAL_LINKS, jsonLd } from '@/lib/seo';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -12,10 +13,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sitesonpolaris.com'),
-  title: 'Custom Web Design in Charlotte, NC | High-Converting Business Websites',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Custom Web Design in Charlotte, NC | High-Converting Business Websites',
+    template: '%s | Sites on Polaris',
+  },
   description: 'Custom-designed websites built to convert visitors into leads. React development & Wix Partner, SEO-ready, mobile-optimized, and scalable. Serving Charlotte & Gastonia.',
-  keywords: 'Charlotte web design, Gastonia web designer, Custom website design, Wix web designer, Small business web design, Professional web design agency',
   authors: [{ name: 'Sites on Polaris - Jesse Shepeard' }],
   robots: 'index, follow',
   icons: {
@@ -42,6 +45,38 @@ export const metadata: Metadata = {
     description: 'Custom-designed websites built to convert visitors into leads. React development & Wix Partner, SEO-ready, mobile-optimized, and scalable. Serving Charlotte & Gastonia.',
     images: ['https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Branding/youtube%20banner.jpg'],
   },
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE_URL}/#organization`,
+  name: SITE_NAME,
+  description: 'Custom web design and development for small businesses in Gastonia, Charlotte and Gaston County, NC. React development & Wix Partner, SEO-ready, mobile-optimized, and built to convert visitors into leads.',
+  url: SITE_URL,
+  logo: LOGO_URL,
+  image: LOGO_URL,
+  telephone: '(704) 251-5030',
+  email: 'hello@sitesonpolaris.com',
+  priceRange: '$499-$5000',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Charlotte',
+    addressRegion: 'NC',
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 35.2271,
+    longitude: -80.8431,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Gastonia, NC' },
+    { '@type': 'City', name: 'Charlotte, NC' },
+    { '@type': 'AdministrativeArea', name: 'Gaston County, NC' },
+  ],
+  founder: { '@type': 'Person', name: 'Jesse Shepeard' },
+  sameAs: SOCIAL_LINKS,
 };
 
 export default function RootLayout({
@@ -81,58 +116,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "vbdmo2vygq");`}
         </Script>
 
-        <Script id="schema-org" type="application/ld+json" strategy="afterInteractive">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Sites on Polaris",
-            "description": "Custom-designed websites built to convert visitors into leads. React development & Wix Partner, SEO-ready, mobile-optimized, and scalable. Serving Charlotte & Gastonia.",
-            "url": "https://sitesonpolaris.com",
-            "telephone": "(704) 251-5030",
-            "email": "hello@sitesonpolaris.com",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Charlotte",
-              "addressRegion": "NC",
-              "addressCountry": "US"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": "35.2271",
-              "longitude": "-80.8431"
-            },
-            "areaServed": {
-              "@type": "State",
-              "name": "North Carolina"
-            },
-            "serviceArea": {
-              "@type": "GeoCircle",
-              "geoMidpoint": {
-                "@type": "GeoCoordinates",
-                "latitude": "35.2271",
-                "longitude": "-80.8431"
-              },
-              "geoRadius": "100"
-            },
-            "priceRange": "$499-$5000",
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "25",
-              "bestRating": "5",
-              "worstRating": "5"
-            },
-            "founder": {
-              "@type": "Person",
-              "name": "Jesse Shepeard"
-            },
-            "sameAs": [
-              "https://www.facebook.com/sitesonpolaris",
-              "https://www.instagram.com/sitesonpolaris/",
-              "https://g.page/r/CcI5OOZ1D5p1EB0"
-            ]
-          })}
-        </Script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema)} />
       </head>
       <body className={`${spaceGrotesk.variable} font-sans`}>
         <noscript>

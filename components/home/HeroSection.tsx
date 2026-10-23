@@ -46,8 +46,8 @@ export function HeroSection() {
           )}
         </div>
 
-        {/* Headline */}
-        <h1 className="text-xl sm:text-3xl md:text-3xl lg:text-3xl font-bold text-neutral-dark mb-2 leading-tight" style={{ animationDelay: '0.1s' }}>
+        {/* Tagline */}
+        <p className="text-xl sm:text-3xl md:text-3xl lg:text-3xl font-bold text-neutral-dark mb-2 leading-tight" style={{ animationDelay: '0.1s' }}>
           We don&apos;t just build websites.{' '}
           <br></br>
           <span className="relative">
@@ -55,12 +55,12 @@ export function HeroSection() {
               We build revenue engines.
             </span>
           </span>
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-xs sm:text-sm font-bold text-neutral-dark mb-3 sm:mb-4" style={{ animationDelay: '0.2s' }}>
-          Custom Web Design for Growing Businesses in Charlotte & Gastonia
         </p>
+
+        {/* Headline (kept visually small; the tagline above carries the visual weight) */}
+        <h1 className="text-xs sm:text-sm font-bold text-neutral-dark mb-3 sm:mb-4" style={{ animationDelay: '0.2s' }}>
+          Custom Web Design for Growing Businesses in Gastonia & Charlotte, NC
+        </h1>
 
         <p className="text-neutral-dark/70 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8" style={{ animationDelay: '0.25s' }}>
           Your website should be a lead-generating asset, not just an online brochure. We create high-converting websites that turn visitors into customers.
