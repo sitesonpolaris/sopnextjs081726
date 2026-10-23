@@ -1,72 +1,92 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/lib/supabase';
+import { getPublishedPost, getPublishedSlugs } from '@/lib/blog';
+import { DEFAULT_OG_IMAGE, LOGO_URL, SITE_NAME, absoluteUrl, jsonLd } from '@/lib/seo';
 
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  author: string;
-  created_at: string;
-  category: string;
-  read_time: string;
+export const revalidate = 3600;
+
+type Props = { params: { slug: string } };
+
+export async function generateStaticParams() {
+  const posts = await getPublishedSlugs();
+  return posts.map(({ slug }) => ({ slug }));
 }
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = await getPublishedPost(params.slug);
+  if (!post) return {};
 
-  useEffect(() => {
-    async function fetchPost() {
-      const { data } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('slug', params.slug)
-        .eq('published', true)
-        .maybeSingle();
-      setPost(data);
-      setLoading(false);
-    }
-    fetchPost();
-  }, [params.slug]);
+  const title = post.seo_title || post.title;
+  const description = post.seo_description || post.excerpt;
+  const path = `/blog/${post.slug}`;
+  const image = post.image_url || DEFAULT_OG_IMAGE;
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#f8f8f8] pt-32">
-        <div className="mx-auto max-w-3xl px-6">
-          <div className="animate-pulse space-y-6">
-            <div className="h-6 w-32 rounded bg-zero/10" />
-            <div className="h-10 w-3/4 rounded bg-zero/10" />
-            <div className="h-80 rounded-2xl bg-zero/5" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return {
+    // seo_title is written as the full title tag, so skip the site-name template.
+    title: post.seo_title ? { absolute: post.seo_title } : post.title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title,
+      description,
+      url: path,
+      siteName: SITE_NAME,
+      type: 'article',
+      publishedTime: post.created_at,
+      modifiedTime: post.updated_at,
+      authors: [post.author],
+      images: [{ url: image, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
 
-  if (!post) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f8f8]">
-        <h1 className="text-2xl font-bold text-zero">Post Not Found</h1>
-        <p className="mt-2 text-zero/60">The blog post you&apos;re looking for doesn&apos;t exist.</p>
-        <Button asChild className="mt-6 bg-fahrenheit hover:bg-fahrenheit/90 text-white">
-          <Link href="/blog">Back to Blog</Link>
-        </Button>
-      </div>
-    );
-  }
+export default async function BlogPostPage({ params }: Props) {
+  const post = await getPublishedPost(params.slug);
+  if (!post) notFound();
+
+  const url = absoluteUrl(`/blog/${post.slug}`);
+  const structuredData = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.seo_description || post.excerpt,
+      image: post.image_url || DEFAULT_OG_IMAGE,
+      datePublished: post.created_at,
+      dateModified: post.updated_at,
+      author: { '@type': 'Person', name: post.author },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        logo: { '@type': 'ImageObject', url: LOGO_URL },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      url,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: absoluteUrl('/blog') },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
+      ],
+    },
+  ];
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(structuredData)} />
+
       <section className="bg-white pt-32 pb-16">
         <div className="mx-auto max-w-3xl px-6">
           <Link
@@ -88,11 +108,14 @@ export default function BlogPostPage() {
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              {new Date(post.created_at).toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-              })}
+              <time dateTime={post.created_at}>
+                {new Date(post.created_at).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  timeZone: 'America/New_York',
+                })}
+              </time>
             </div>
           </div>
         </div>

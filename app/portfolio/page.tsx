@@ -2,12 +2,14 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Portfolio | Sites on Polaris - Charlotte, NC Web Design Projects',
+export const metadata = pageMetadata({
+  title: 'Portfolio: Charlotte, NC Web Design Projects',
   description:
     'Explore our portfolio of custom web design and development projects for businesses in Charlotte, NC and beyond.',
-};
+  path: '/portfolio',
+});
 
 export default function PortfolioPage() {
   return (
