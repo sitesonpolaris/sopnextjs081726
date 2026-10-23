@@ -65,8 +65,6 @@ export default function BlogPostPage() {
     );
   }
 
-  const paragraphs = post.content.split('\n\n');
-
   return (
     <>
       <section className="bg-white pt-32 pb-16">
@@ -114,54 +112,10 @@ export default function BlogPostPage() {
           )}
 
           <article className="rounded-2xl border border-zero/10 bg-white p-8 shadow-sm sm:p-12">
-            <div className="prose prose-lg max-w-none">
-              {paragraphs.map((paragraph, idx) => {
-                if (paragraph.startsWith('## ')) {
-                  return (
-                    <h2
-                      key={idx}
-                      className="mt-10 mb-4 text-2xl font-bold text-zero first:mt-0"
-                    >
-                      {paragraph.replace('## ', '')}
-                    </h2>
-                  );
-                }
-                if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                  return (
-                    <p key={idx} className="mb-4 font-bold text-zero">
-                      {paragraph.replace(/\*\*/g, '')}
-                    </p>
-                  );
-                }
-                if (paragraph.startsWith('- ')) {
-                  const items = paragraph.split('\n');
-                  return (
-                    <ul key={idx} className="mb-6 space-y-2">
-                      {items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-zero/70">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-fahrenheit" />
-                          {item.replace('- ', '')}
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                }
-                if (paragraph.startsWith('**') && paragraph.includes(':')) {
-                  const [bold, rest] = paragraph.split('**:');
-                  return (
-                    <p key={idx} className="mb-4 text-lg leading-relaxed text-zero/70">
-                      <strong className="text-zero">{bold.replace(/\*\*/g, '')}:</strong>
-                      {rest?.replace(/\*\*/g, '')}
-                    </p>
-                  );
-                }
-                return (
-                  <p key={idx} className="mb-4 text-lg leading-relaxed text-zero/70">
-                    {paragraph}
-                  </p>
-                );
-              })}
-            </div>
+            <div
+              className="blog-content max-w-none"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
           </article>
 
           <div className="mt-12 rounded-2xl border border-zero/10 bg-white p-8 shadow-sm text-center">
