@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SERVICE_AREAS } from '@/lib/service-areas';
 
 const navLinks = [
   { href: '/web-design-development', label: 'Web Design & Development' },
@@ -21,7 +22,11 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  const isServicePage = pathname === '/web-design-development' || pathname === '/website-optimization';
+  // These pages open with a dark hero, so the navbar stays solid white on them.
+  const isServicePage =
+    pathname === '/web-design-development' ||
+    pathname === '/website-optimization' ||
+    SERVICE_AREAS.some((area) => pathname === `/${area.slug}`);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
