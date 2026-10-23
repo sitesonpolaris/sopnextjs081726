@@ -114,9 +114,11 @@ export default function WebsiteOptimizationPage() {
                   className="group overflow-hidden rounded-2xl border border-zero/10 bg-[#f8f8f8] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="relative h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={project.image_url}
-                      alt={project.title}
+                      alt={`${project.title} website`}
+                      fill
+                      sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zero/70 to-transparent" />
@@ -242,6 +244,7 @@ export default function WebsiteOptimizationPage() {
                   src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/AI%201.jpeg"
                   alt="AI Impact on Web Search"
                   fill
+                  sizes="(min-width: 1024px) 400px, 100vw"
                   className="object-cover"
                 />
               </div>
@@ -373,9 +376,11 @@ Your site should be <span className="font-semibold text-fahrenheit">your best sa
             </div>
             <div className="lg:col-span-1">
               <div className="relative aspect-square overflow-hidden rounded-2xl shadow-xl">
-                <img
+                <Image
                   src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/SEO%20image.jpeg"
                   alt="SEO Services"
+                  fill
+                  sizes="(min-width: 1024px) 400px, 100vw"
                   className="h-full w-full object-cover"
                 />
               </div>

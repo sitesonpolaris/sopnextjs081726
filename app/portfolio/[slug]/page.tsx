@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ExternalLink, Star, AlertCircle, Lightbulb, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -182,10 +183,14 @@ export default function PortfolioDetailPage() {
                 )}
               </div>
             ) : project.thumbnail_url ? (
-              <img
+              <Image
                 src={project.thumbnail_url}
-                alt={project.title}
-                className="w-full object-cover"
+                alt={`${project.title} website`}
+                width={1200}
+                height={675}
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                priority
+                className="w-full h-auto object-cover"
                 style={{ maxHeight: '600px' }}
               />
             ) : null}

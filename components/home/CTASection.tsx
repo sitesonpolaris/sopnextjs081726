@@ -48,7 +48,7 @@ export function CTASection() {
             size="lg"
             className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white gap-2 px-8 py-6 text-base"
           >
-            <Link href="/services">Explore Solutions</Link>
+            <Link href="/web-design-development">Explore Solutions</Link>
           </Button>
         </div>
       </div>

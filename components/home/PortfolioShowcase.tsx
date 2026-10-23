@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -85,9 +86,11 @@ export function PortfolioShowcase() {
                   className="group relative w-[340px] shrink-0 overflow-hidden rounded-2xl border border-zero/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="relative h-52 overflow-hidden">
-                    <img
+                    <Image
                       src={project.thumbnail_url}
-                      alt={project.title}
+                      alt={`${project.title} website`}
+                      fill
+                      sizes="340px"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zero/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />

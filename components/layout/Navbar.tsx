@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -48,8 +49,11 @@ export function Navbar() {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-3">
-            <img
+            <Image
               src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Branding/SOP_Logo_Full_RGB_SOP_Logo_Full_RGB_Red.png"
+              width={199}
+              height={32}
+              priority
               alt="Sites on Polaris"
               className="h-8 w-auto"
             />
@@ -90,8 +94,10 @@ export function Navbar() {
         <div className="fixed inset-0 z-[60] bg-white lg:hidden">
           <div className="flex items-center justify-between px-6 py-4">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3">
-              <img
+              <Image
                 src="https://dewkxfhbqkomcuxzovuw.supabase.co/storage/v1/object/public/media/Branding/SOP_Logo_Full_RGB_SOP_Logo_Full_RGB_Red.png"
+                width={199}
+                height={32}
                 alt="Sites on Polaris"
                 className="h-8 w-auto"
               />

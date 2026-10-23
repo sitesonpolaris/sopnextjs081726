@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import Link from 'next/link';
-import { ArrowRight, Calendar, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { PostCard } from '@/components/blog/PostCard';
 import type { BlogPostSummary } from '@/lib/blog';
 
 export function BlogList({ posts }: { posts: BlogPostSummary[] }) {
@@ -64,41 +64,7 @@ export function BlogList({ posts }: { posts: BlogPostSummary[] }) {
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {filteredPosts.map((post) => (
-          <Link
-            key={post.id}
-            href={`/blog/${post.slug}`}
-            className="group overflow-hidden rounded-2xl border border-zero/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div className="relative h-52 overflow-hidden">
-              <img
-                src={post.image_url}
-                alt={post.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center gap-2 text-sm text-zero/40">
-                <Calendar className="h-3.5 w-3.5" />
-                {new Date(post.created_at).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                  // Fixed zone so the server-rendered date matches hydration in any browser.
-                  timeZone: 'America/New_York',
-                })}
-              </div>
-              <h2 className="mt-2 text-lg font-bold text-zero group-hover:text-fahrenheit transition-colors line-clamp-2">
-                {post.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-zero/50 line-clamp-3">
-                {post.excerpt}
-              </p>
-              <div className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fahrenheit transition-all group-hover:gap-2">
-                Read More
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </div>
-          </Link>
+          <PostCard key={post.id} post={post} />
         ))}
       </div>
 
