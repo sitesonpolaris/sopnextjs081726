@@ -313,8 +313,8 @@ function ContactForm() {
                     </div>
                     <div>
                       <p className="font-medium text-zero">Phone</p>
-                      <a href="tel:+17045551234" className="text-sm text-fahrenheit hover:underline">
-                        (704) 555-1234
+                      <a href="tel:+17042515030" className="text-sm text-fahrenheit hover:underline">
+                        (704) 251-5030
                       </a>
                     </div>
                   </div>
