@@ -6,6 +6,7 @@ import { TechStackSection } from '@/components/home/TechStackSection';
 import { PortfolioShowcase } from '@/components/home/PortfolioShowcase';
 import { MeteorHouseSection } from '@/components/home/MeteorHouseSection';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
+import { CuratorFeed } from '@/components/home/CuratorFeed';
 import { CTASection } from '@/components/home/CTASection';
 import type { Metadata } from 'next';
 
@@ -24,6 +25,7 @@ export default function Home() {
       <PortfolioShowcase />
       <MeteorHouseSection />
       <TestimonialsSection />
+      <CuratorFeed />
       <CTASection />
     </>
   );
