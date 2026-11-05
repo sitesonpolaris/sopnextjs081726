@@ -7,11 +7,7 @@ import { PortfolioShowcase } from '@/components/home/PortfolioShowcase';
 import { MeteorHouseSection } from '@/components/home/MeteorHouseSection';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { CTASection } from '@/components/home/CTASection';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-};
+import { InstagramFeedSection } from '@/components/home/InstagramFeedSection';
 
 export default function Home() {
   return (
