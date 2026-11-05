@@ -24,6 +24,7 @@ export default function Home() {
       <PortfolioShowcase />
       <MeteorHouseSection />
       <TestimonialsSection />
+      <InstagramFeedSection />
       <CTASection />
     </>
   );
