@@ -15,6 +15,7 @@ const STATIC_ROUTES = [
   '/blog',
   '/meteor-house',
   '/contact',
+  '/free-mockup',
   '/booking',
   '/web-service-form',
 ];

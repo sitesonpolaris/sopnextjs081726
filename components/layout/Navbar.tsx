@@ -78,7 +78,7 @@ export function Navbar() {
 
           <div className="hidden xl:block">
             <Button asChild className="bg-fahrenheit hover:bg-fahrenheit/90 text-white gap-2">
-              <Link href="/booking">
+              <Link href="/free-mockup">
                 Free Mockup
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -137,7 +137,7 @@ export function Navbar() {
             ))}
             <div className="mt-6">
               <Button asChild className="w-full bg-fahrenheit hover:bg-fahrenheit/90 text-white gap-2">
-                <Link href="/booking" onClick={() => setMobileOpen(false)}>
+                <Link href="/free-mockup" onClick={() => setMobileOpen(false)}>
                   Get My Free Homepage Mockup
                   <ArrowRight className="h-4 w-4" />
                 </Link>

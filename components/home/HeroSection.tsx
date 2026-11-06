@@ -49,7 +49,7 @@ export function HeroSection() {
 
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-6">
             <Link
-              href="/booking"
+              href="/free-mockup"
               className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-fahrenheit px-7 text-base font-bold text-white transition-colors hover:bg-fahrenheit/90 sm:h-[60px] sm:text-lg"
             >
               Get My Free Homepage Mockup
