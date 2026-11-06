@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SERVICE_AREAS } from '@/lib/service-areas';
 
@@ -64,7 +64,7 @@ export function Navbar() {
             />
           </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -76,27 +76,36 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="hidden lg:block">
-            <Button asChild variant="outline" className="border-fahrenheit text-fahrenheit hover:bg-fahrenheit hover:text-white gap-2">
+          <div className="hidden xl:block">
+            <Button asChild className="bg-fahrenheit hover:bg-fahrenheit/90 text-white gap-2">
               <Link href="/booking">
-                Free Quote
+                Free Mockup
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded-lg p-2 text-zero transition-colors hover:bg-zero/5 lg:hidden"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-1 xl:hidden">
+            <a
+              href="tel:+17042515030"
+              aria-label="Call (704) 251-5030"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-fahrenheit transition-colors hover:bg-zero/5"
+            >
+              <Phone className="h-5 w-5" />
+            </a>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="rounded-lg p-2 text-zero transition-colors hover:bg-zero/5"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </nav>
       </header>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] bg-white lg:hidden">
+        <div className="fixed inset-0 z-[60] bg-white xl:hidden">
           <div className="flex items-center justify-between px-6 py-4">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3">
               <Image
@@ -129,7 +138,7 @@ export function Navbar() {
             <div className="mt-6">
               <Button asChild className="w-full bg-fahrenheit hover:bg-fahrenheit/90 text-white gap-2">
                 <Link href="/booking" onClick={() => setMobileOpen(false)}>
-                  Free Quote
+                  Get My Free Homepage Mockup
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
