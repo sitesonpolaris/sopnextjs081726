@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChartBar as BarChart3, FileText, Briefcase, MessageSquare, Users, Mail, Send, ChevronDown, ListChecks } from 'lucide-react';
+import { ChartBar as BarChart3, FileText, Briefcase, MessageSquare, Users, Mail, Send, ChevronDown, ListChecks, PhoneCall } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 import { AdminSignOutButton } from './AdminAuth';
 
@@ -15,6 +15,7 @@ interface AdminLayoutProps {
 // Tabs with an href are separate pages; the rest switch views inside /admin.
 const tabs: { id: string; label: string; icon: typeof Users; href?: string }[] = [
   { id: 'tasks', label: 'Tasks', icon: ListChecks, href: '/admin/tasks' },
+  { id: 'leads', label: 'Leads', icon: PhoneCall, href: '/admin/leads' },
   { id: 'clients', label: 'Clients', icon: Users },
   { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
   { id: 'blog', label: 'Blog', icon: FileText },
