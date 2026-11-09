@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import PortfolioManager from '@/components/admin/PortfolioManager';
 import BlogManager from '@/components/admin/BlogManager';
@@ -15,6 +15,12 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner';
 export default function AdminPage() {
   const { loading, authed } = useAdminAuth();
   const [activeTab, setActiveTab] = useState('clients');
+
+  // Other admin pages link back here with ?tab=<id>.
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get('tab');
+    if (tab) setActiveTab(tab);
+  }, []);
 
   if (loading) {
     return (

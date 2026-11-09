@@ -72,6 +72,27 @@ export interface Project {
   client?: Client;
 }
 
+export type TaskStatus = 'open' | 'waiting_on_client' | 'suggested' | 'done' | 'paid' | 'cancelled';
+export type BallInCourt = 'jesse' | 'client';
+
+export interface Task {
+  id: string;
+  client_id: string | null;
+  project_id: string | null;
+  client_label: string;
+  title: string;
+  status: TaskStatus;
+  ball_in_court: BallInCourt | null;
+  last_activity: string | null;
+  next_step: string | null;
+  source: string | null;
+  due_date: string | null;
+  added_on: string;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface ProjectPayment {
   id: string;
   project_id: string;
@@ -371,6 +392,50 @@ export const projectAPI = {
   async delete(id: string): Promise<void> {
     const { error } = await supabase.from('projects').delete().eq('id', id);
     if (error) throw error;
+  },
+};
+
+// ==================== TASKS API ====================
+
+// completed_at, created_at and updated_at are set by a database trigger.
+export type TaskInput = Partial<Omit<Task, 'id' | 'completed_at' | 'created_at' | 'updated_at'>>;
+
+export const taskAPI = {
+  async getAll(): Promise<Task[]> {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .order('last_activity', { ascending: true, nullsFirst: true });
+    if (error) throw error;
+    return data as Task[];
+  },
+
+  async getOpenForProject(projectId: string): Promise<Task[]> {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('project_id', projectId)
+      .not('status', 'in', '(done,paid,cancelled)')
+      .order('last_activity', { ascending: true, nullsFirst: true });
+    if (error) throw error;
+    return data as Task[];
+  },
+
+  async create(task: TaskInput): Promise<Task> {
+    const { data, error } = await supabase.from('tasks').insert(task).select().single();
+    if (error) throw error;
+    return data as Task;
+  },
+
+  async update(id: string, task: TaskInput): Promise<Task> {
+    const { data, error } = await supabase
+      .from('tasks')
+      .update(task)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data as Task;
   },
 };
 

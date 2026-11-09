@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ChartBar as BarChart3, FileText, Briefcase, MessageSquare, Users, Mail, Send, ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ChartBar as BarChart3, FileText, Briefcase, MessageSquare, Users, Mail, Send, ChevronDown, ListChecks } from 'lucide-react';
+import { Toaster } from '@/components/ui/sonner';
 import { AdminSignOutButton } from './AdminAuth';
 
 interface AdminLayoutProps {
@@ -10,7 +12,9 @@ interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
-const tabs = [
+// Tabs with an href are separate pages; the rest switch views inside /admin.
+const tabs: { id: string; label: string; icon: typeof Users; href?: string }[] = [
+  { id: 'tasks', label: 'Tasks', icon: ListChecks, href: '/admin/tasks' },
   { id: 'clients', label: 'Clients', icon: Users },
   { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
   { id: 'blog', label: 'Blog', icon: FileText },
@@ -22,7 +26,16 @@ const tabs = [
 
 export default function AdminLayout({ activeTab, onTabChange, children }: AdminLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter();
   const activeTabData = tabs.find((tab) => tab.id === activeTab);
+
+  const selectTab = (tab: (typeof tabs)[number]) => {
+    if (tab.href) {
+      router.push(tab.href);
+    } else {
+      onTabChange(tab.id);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f8f8f8] pt-28 md:pt-32">
@@ -35,7 +48,7 @@ export default function AdminLayout({ activeTab, onTabChange, children }: AdminL
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => onTabChange(tab.id)}
+                    onClick={() => selectTab(tab)}
                     className={`flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap ${
                       activeTab === tab.id
                         ? 'bg-fahrenheit text-white shadow-sm'
@@ -75,7 +88,7 @@ export default function AdminLayout({ activeTab, onTabChange, children }: AdminL
                   <button
                     key={tab.id}
                     onClick={() => {
-                      onTabChange(tab.id);
+                      selectTab(tab);
                       setMobileOpen(false);
                     }}
                     className={`flex items-center gap-3 w-full px-4 py-4 text-left transition-all min-h-[48px] ${
@@ -95,6 +108,7 @@ export default function AdminLayout({ activeTab, onTabChange, children }: AdminL
       </div>
 
       <div className="px-4 py-6 sm:p-6 max-w-7xl mx-auto">{children}</div>
+      <Toaster theme="light" position="top-center" />
     </div>
   );
 }
