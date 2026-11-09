@@ -6,6 +6,7 @@ import { projectAPI, clientAPI, type Project, type Client } from '@/lib/admin-da
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import PaymentManager from './PaymentManager';
 import ClientModal from './ClientModal';
+import ProjectTasks from './tasks/ProjectTasks';
 
 interface ProjectFormProps {
   project?: Project | null;
@@ -262,6 +263,8 @@ export default function ProjectForm({
       </form>
 
       {project && <PaymentManager projectId={project.id} onPaymentsChange={onPaymentsChange} />}
+
+      {project && <ProjectTasks projectId={project.id} />}
 
       {showClientModal && (
         <ClientModal
