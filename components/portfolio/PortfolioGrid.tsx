@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { Star, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
@@ -82,6 +83,7 @@ export function PortfolioGrid() {
               <div className="relative h-56 overflow-hidden">
                 <Image
                   src={project.thumbnail_url}
+                  unoptimized={!isOptimizableImage(project.thumbnail_url)}
                   alt={`${project.title} website`}
                   fill
                   sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"

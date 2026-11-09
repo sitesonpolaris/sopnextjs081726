@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -111,6 +112,7 @@ export default function PortfolioSliderMH() {
                 ) : (
                   <Image
                     src={currentItem.image_url}
+                    unoptimized={!isOptimizableImage(currentItem.image_url)}
                     alt={currentItem.title}
                     fill
                     sizes="(min-width: 1024px) 1024px, 100vw"

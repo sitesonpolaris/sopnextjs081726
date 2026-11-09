@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Upload, Link as LinkIcon, X, Loader as Loader2, Check } from 'lucide-react';
 import { uploadFile } from '@/lib/admin-data';
 
@@ -20,6 +20,11 @@ export default function ImageInput({
   placeholder = 'Upload image or enter URL',
 }: ImageInputProps) {
   const [url, setUrl] = useState(currentUrl);
+
+  // The form loads the saved item after this mounts, so follow currentUrl when it changes.
+  useEffect(() => {
+    setUrl(currentUrl);
+  }, [currentUrl]);
   const [mode, setMode] = useState<'upload' | 'url'>('upload');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);

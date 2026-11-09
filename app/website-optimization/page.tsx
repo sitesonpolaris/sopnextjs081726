@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import {
   ArrowRight,
   Zap,
@@ -116,6 +117,7 @@ export default function WebsiteOptimizationPage() {
                   <div className="relative h-48 overflow-hidden">
                     <Image
                       src={project.image_url}
+                      unoptimized={!isOptimizableImage(project.image_url)}
                       alt={`${project.title} website`}
                       fill
                       sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"

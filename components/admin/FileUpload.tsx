@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Upload, Link as LinkIcon, X, Loader as Loader2, Check } from 'lucide-react';
 import { uploadFile } from '@/lib/admin-data';
 
@@ -24,6 +24,11 @@ export default function FileUpload({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState(currentUrl);
+
+  // The form loads the saved post after this mounts, so follow currentUrl when it changes.
+  useEffect(() => {
+    setPreview(currentUrl);
+  }, [currentUrl]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -75,6 +80,7 @@ export default function FileUpload({
 
         {preview && (
           <button
+            type="button"
             onClick={() => {
               setPreview('');
               onUpload('');
