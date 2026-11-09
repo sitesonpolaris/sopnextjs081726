@@ -22,8 +22,12 @@ const projectStatuses = [
   { value: 'proposal_sent', label: 'Proposal Sent', color: 'text-yellow-600 bg-yellow-100' },
   { value: 'deposit_received', label: 'Deposit Received', color: 'text-green-600 bg-green-100' },
   { value: 'website_build', label: 'Website Build', color: 'text-teal-600 bg-teal-100' },
-  { value: 'retainer_active', label: 'Retainer Active', color: 'text-green-600 bg-green-100' },
+  { value: 'waiting_on_client', label: 'Waiting on Client', color: 'text-purple-600 bg-purple-100' },
+  { value: 'on_hold', label: 'On Hold', color: 'text-slate-600 bg-slate-100' },
+  { value: 'awaiting_payment', label: 'Awaiting Payment', color: 'text-amber-700 bg-amber-100' },
   { value: 'completed_ongoing', label: 'Completed / Ongoing', color: 'text-green-700 bg-green-100' },
+  { value: 'completed_one_off', label: 'Completed (One-off)', color: 'text-green-600 bg-green-50' },
+  { value: 'retainer_active', label: 'Retainer Active', color: 'text-green-600 bg-green-100' },
   { value: 'cancelled', label: 'Cancelled', color: 'text-red-600 bg-red-100' },
 ];
 
