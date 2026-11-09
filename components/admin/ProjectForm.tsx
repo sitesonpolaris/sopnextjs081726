@@ -23,8 +23,12 @@ const projectStatuses = [
   { value: 'proposal_sent', label: 'Proposal Sent' },
   { value: 'deposit_received', label: 'Deposit Received' },
   { value: 'website_build', label: 'Website Build' },
-  { value: 'retainer_active', label: 'Retainer Active' },
+  { value: 'waiting_on_client', label: 'Waiting on Client' },
+  { value: 'on_hold', label: 'On Hold' },
+  { value: 'awaiting_payment', label: 'Awaiting Payment' },
   { value: 'completed_ongoing', label: 'Completed / Ongoing' },
+  { value: 'completed_one_off', label: 'Completed (One-off)' },
+  { value: 'retainer_active', label: 'Retainer Active' },
   { value: 'cancelled', label: 'Cancelled' },
 ];
 
