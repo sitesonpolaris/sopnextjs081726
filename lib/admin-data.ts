@@ -93,6 +93,57 @@ export interface Task {
   updated_at: string;
 }
 
+export type LeadStatus =
+  | 'not_called'
+  | 'no_answer'
+  | 'left_voicemail'
+  | 'call_back'
+  | 'sent_dm'
+  | 'interested'
+  | 'sample_site_sent'
+  | 'quoted'
+  | 'won'
+  | 'not_interested'
+  | 'closed_bad_number';
+export type LeadType = 'primary' | 'backup';
+export type ContactMethod = 'call' | 'text' | 'email' | 'dm' | 'in_person' | 'other';
+
+export interface Lead {
+  id: string;
+  business: string;
+  category: string | null;
+  lead_type: LeadType | null;
+  phone: string | null;
+  email: string | null;
+  contact_name: string | null;
+  address: string | null;
+  rating: number | null;
+  reviews: number | null;
+  web_presence: string | null;
+  other_contact: string | null;
+  notes: string | null;
+  source: string | null;
+  status: LeadStatus;
+  attempts: number;
+  last_contact: string | null;
+  next_follow_up: string | null;
+  client_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LeadContact {
+  id: string;
+  lead_id: string;
+  contacted_on: string;
+  method: ContactMethod;
+  outcome: LeadStatus | null;
+  spoke_with: string | null;
+  notes: string | null;
+  next_step: string | null;
+  created_at: string;
+}
+
 export interface ProjectPayment {
   id: string;
   project_id: string;
@@ -436,6 +487,64 @@ export const taskAPI = {
       .single();
     if (error) throw error;
     return data as Task;
+  },
+};
+
+// ==================== LEADS API ====================
+
+export type LeadInput = Partial<Omit<Lead, 'id' | 'created_at' | 'updated_at'>>;
+export type LeadContactInput = Omit<LeadContact, 'id' | 'created_at'>;
+
+export const leadAPI = {
+  async getAll(): Promise<Lead[]> {
+    const { data, error } = await supabase.from('leads').select('*').order('business', { ascending: true });
+    if (error) throw error;
+    return data as Lead[];
+  },
+
+  async create(lead: LeadInput): Promise<Lead> {
+    const { data, error } = await supabase.from('leads').insert(lead).select().single();
+    if (error) throw error;
+    return data as Lead;
+  },
+
+  async update(id: string, lead: LeadInput): Promise<Lead> {
+    const { data, error } = await supabase.from('leads').update(lead).eq('id', id).select().single();
+    if (error) throw error;
+    return data as Lead;
+  },
+};
+
+export const leadContactAPI = {
+  async getForLead(leadId: string): Promise<LeadContact[]> {
+    const { data, error } = await supabase
+      .from('lead_contacts')
+      .select('*')
+      .eq('lead_id', leadId)
+      .order('contacted_on', { ascending: false })
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data as LeadContact[];
+  },
+
+  async countSince(date: string): Promise<number> {
+    const { count, error } = await supabase
+      .from('lead_contacts')
+      .select('id', { count: 'exact', head: true })
+      .gte('contacted_on', date);
+    if (error) throw error;
+    return count ?? 0;
+  },
+
+  async create(contact: LeadContactInput): Promise<LeadContact> {
+    const { data, error } = await supabase.from('lead_contacts').insert(contact).select().single();
+    if (error) throw error;
+    return data as LeadContact;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase.from('lead_contacts').delete().eq('id', id);
+    if (error) throw error;
   },
 };
 
