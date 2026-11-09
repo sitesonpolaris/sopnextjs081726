@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -130,6 +131,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="mb-12 overflow-hidden rounded-2xl border border-zero/10 shadow-lg">
               <Image
                 src={post.image_url}
+                unoptimized={!isOptimizableImage(post.image_url)}
                 alt={post.title}
                 width={1200}
                 height={630}

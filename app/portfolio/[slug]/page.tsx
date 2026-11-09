@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ExternalLink, Star, AlertCircle, Lightbulb, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -185,6 +186,7 @@ export default function PortfolioDetailPage() {
             ) : project.thumbnail_url ? (
               <Image
                 src={project.thumbnail_url}
+                unoptimized={!isOptimizableImage(project.thumbnail_url)}
                 alt={`${project.title} website`}
                 width={1200}
                 height={675}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import {
   ArrowRight,
   Paintbrush,
@@ -118,6 +119,7 @@ export default function WebDesignDevelopmentPage() {
                   <div className="relative h-64 overflow-hidden">
                     <Image
                       src={project.image_url}
+                      unoptimized={!isOptimizableImage(project.image_url)}
                       alt={`${project.title} website`}
                       fill
                       sizes="(min-width: 1280px) 600px, (min-width: 640px) 50vw, 100vw"

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { ArrowRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -88,6 +89,7 @@ export function PortfolioShowcase() {
                   <div className="relative h-52 overflow-hidden">
                     <Image
                       src={project.thumbnail_url}
+                      unoptimized={!isOptimizableImage(project.thumbnail_url)}
                       alt={`${project.title} website`}
                       fill
                       sizes="340px"

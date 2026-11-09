@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import { ArrowRight, Calendar } from 'lucide-react';
 import type { BlogPostSummary } from '@/lib/blog';
 
@@ -19,6 +20,7 @@ export function PostCard({
         {post.image_url && (
           <Image
             src={post.image_url}
+            unoptimized={!isOptimizableImage(post.image_url)}
             alt={post.title}
             fill
             sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"

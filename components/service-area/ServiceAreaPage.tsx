@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizableImage } from '@/lib/images';
 import {
   ArrowRight,
   BarChart3,
@@ -236,6 +237,7 @@ export async function ServiceAreaPage({ area }: { area: ServiceArea }) {
                     {project.image_url && (
                       <Image
                         src={project.image_url}
+                        unoptimized={!isOptimizableImage(project.image_url)}
                         alt={`${project.title} website`}
                         fill
                         sizes="(min-width: 1280px) 600px, (min-width: 640px) 50vw, 100vw"
